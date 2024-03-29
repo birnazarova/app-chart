@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-app
+  labels:
+    managed-by: dso
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      application: nginx-app
+  template:
+    metadata:
+      labels:
+        application: nginx-app
+    spec:
+      serviceAccountName: nginx-sa
+      containers:
+        - name: nginx
+          image: us-central1-docker.pkg.dev/proven-dryad-417822/hello-app/hello-app:v2
+          ports:
+            - name: http
+              containerPort: 80
