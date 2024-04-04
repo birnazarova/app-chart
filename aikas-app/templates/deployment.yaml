@@ -3,16 +3,19 @@ kind: Deployment
 metadata:
   name: {{ .Values.nginxApp.deploymentName }}
   labels:
-{{- include "commonLabels" . | nindent 4 }}
+    application: webserver
+    managed-by: sre
 spec:
   replicas: {{ .Values.nginxApp.replicas }}
   selector:
     matchLabels:
-{{- include "commonLabels" . | nindent 6 }}
+      application: webserver
+      managed-by: sre
   template:
     metadata:
       labels:
-{{- include "commonLabels" . | nindent 8 }}
+        application: webserver
+        managed-by: sre
     spec:
       serviceAccountName: {{ .Values.serviceAccountName }}
       containers:
