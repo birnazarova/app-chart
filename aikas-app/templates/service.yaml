@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-svc
+  name: {{ .Values.serviceName }}
   labels:
-    managed-by: dso
+{{- include "commonLabels" . | nindent 4 }}
 spec:
   selector:
-    application: nginx-app
+{{- include "commonLabels" . | nindent 4 }}
   ports:
-    - name: http
-      port: 80
-      targetPort: 80
+    - name: {{ .Values.nginxApp.containerPortName }}
+      port: {{ .Values.nginxApp.containerPortNumber }}
+      targetPort: {{ .Values.nginxApp.containerTargetPortNumber }}

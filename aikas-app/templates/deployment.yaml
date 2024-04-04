@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-app
+  name: {{ .Values.nginxApp.deploymentName }}
   labels:
-    managed-by: dso
+{{- include "commonLabels" . | nindent 4 }}
 spec:
-  replicas: 3
+  replicas: {{ .Values.nginxApp.replicas }}
   selector:
     matchLabels:
-      application: nginx-app
+{{- include "commonLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        application: nginx-app
+{{- include "commonLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: nginx-sa
+      serviceAccountName: {{ .Values.serviceAccountName }}
       containers:
-        - name: nginx
-          image: us-central1-docker.pkg.dev/proven-dryad-417822/hello-app/hello-app:v2
+        - name: {{ .Values.nginxApp.containerName }}
+          image: {{ .Values.nginxApp.image.repository }}:{{ .Values.nginxApp.image.tag }}
           ports:
-            - name: http
-              containerPort: 80
+            - name: {{ .Values.nginxApp.containerPortName }}
+              containerPort: {{ .Values.nginxApp.containerPortNumber }}
