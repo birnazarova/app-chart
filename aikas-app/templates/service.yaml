@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.serviceName }}
+  name: nginx-svc
   labels:
 {{- include "commonLabels" . | nindent 4 }}
 spec:
   selector:
 {{- include "commonLabels" . | nindent 4 }}
   ports:
-    - name: {{ .Values.nginxApp.containerPortName }}
-      port: {{ .Values.nginxApp.containerPortNumber }}
-      targetPort: {{ .Values.nginxApp.containerTargetPortNumber }}
+    - name: http
+      port: 80
+      targetPort: 80
