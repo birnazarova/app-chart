@@ -1,5 +1,5 @@
 nginxApp:
-  replicas: 6
+  replicas: 15
   deploymentName: nginx-app
   containerName: nginx
   image:
@@ -9,6 +9,6 @@ nginxApp:
   containerPortNumber: 80
   containerTargetPortNumber: 80
 
-serviceAccountName: nginx-sa
+serviceAccountName: nginx-service-account
 
 serviceName: nginx-svc
