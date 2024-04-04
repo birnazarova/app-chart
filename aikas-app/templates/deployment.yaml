@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.nginxApp.deploymentName }}
+  name: nginx-app
   labels:
     application: webserver
     managed-by: sre
 spec:
-  replicas: {{ .Values.nginxApp.replicas }}
+  replicas: 3
   selector:
     matchLabels:
       application: webserver
@@ -17,10 +17,10 @@ spec:
         application: webserver
         managed-by: sre
     spec:
-      serviceAccountName: {{ .Values.serviceAccountName }}
+      serviceAccountName: nginx-sa
       containers:
-        - name: {{ .Values.nginxApp.containerName }}
-          image: {{ .Values.nginxApp.image.repository }}:{{ .Values.nginxApp.image.tag }}
+        - name: nginx
+          image: us-central1-docker.pkg.dev/proven-dryad-417822/hello-app/hello-app:v2
           ports:
-            - name: {{ .Values.nginxApp.containerPortName }}
-              containerPort: {{ .Values.nginxApp.containerPortNumber }}
+            - name: http
+              containerPort: 80
