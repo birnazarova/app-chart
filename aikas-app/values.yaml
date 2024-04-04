@@ -1,5 +1,5 @@
 nginxApp:
-  replicas: 3
+  replicas: 2
   deploymentName: nginx-app
   containerName: nginx
   image:
