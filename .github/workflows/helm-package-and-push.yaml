@@ -38,10 +38,7 @@ jobs:
 
       - name: Install Helm plugin
         run: |
-          go get -v github.com/chartmuseum/helm-push
-          cd $GOPATH/pkg/mod/github.com/chartmuseum/helm-push*
-          go build -o /usr/local/bin/helm-push ./cmd/helm-push
-          - id: 'auth'
+          helm plugin install https://github.com/chartmuseum/helm-push
 
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
