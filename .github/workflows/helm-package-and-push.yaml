@@ -2,7 +2,7 @@ name: Helm package and push to GAR
 
 on:
   workflow_run:
-    workflows: ["helm-lint"]
+    workflows: ["Helm Chart Lint"]
     types:
       - completed
   workflow_dispatch:
