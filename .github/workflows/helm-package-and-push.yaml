@@ -9,7 +9,6 @@ on:
 
 env:
     PROJECT_ID: proven-dryad-417822
-    IMAGE_NAME: app-chart
     REGISTRY_LOCATION: us-central1
     REPOSITORY: app-chart
 
@@ -53,5 +52,4 @@ jobs:
 
       - name: Push Helm chart to repository
         run: |
-          helm repo add app-chart "oci://${{ env.REGISTRY_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}"
-          helm push ./packaged-charts/*.tgz app-chart
+          helm push ./packaged-charts/*.tgz "oci://us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/app-chart"
