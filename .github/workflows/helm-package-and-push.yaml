@@ -10,7 +10,7 @@ on:
 env:
     PROJECT_ID: proven-dryad-417822
     IMAGE_NAME: app-chart
-    REGISTRY_LOCATION: us-central-1
+    REGISTRY_LOCATION: us-central1
     REPOSITORY: app-chart
 
 jobs:
