@@ -58,5 +58,5 @@ jobs:
 
       - name: Push Helm chart to repository
         run: |
-          helm repo add app-chart "oci://${{ env.REGISTRY_LOCATION }}-docker.pkg.dev/${{ PROJECT_ID }}/${{ REPOSITORY }}"
+          helm repo add app-chart "oci://${{ env.REGISTRY_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}"
           helm push ./packaged-charts/*.tgz app-chart
