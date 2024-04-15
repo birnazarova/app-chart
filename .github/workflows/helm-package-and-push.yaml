@@ -1,0 +1,62 @@
+name: package-and-push-helm-chart
+
+on:
+  workflow_run:
+    workflows: ["helm-lint"]
+    types:
+      - completed
+  workflow_dispatch:
+
+env:
+    PROJECT_ID: proven-dryad-417822
+    IMAGE_NAME: app-chart
+    REGISTRY_LOCATION: us-central-1
+    REPOSITORY: app-chart
+
+jobs:
+  package-and-push:
+    name: Package and Push Helm Chart
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v1
+
+      - name: Package Helm chart
+        run: |
+          helm package aikas-app/ -d ./packaged-charts
+        working-directory: ${{ github.workspace }}
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.17'
+
+      - name: Install Helm plugin
+        run: |
+          go get -v github.com/chartmuseum/helm-push
+          cd $GOPATH/pkg/mod/github.com/chartmuseum/helm-push*
+          go build -o /usr/local/bin/helm-push ./cmd/helm-push
+          - id: 'auth'
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+        token_format: access_token
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: 'Helm login'
+        run: |
+          gcloud auth print-access-token | helm registry login -u oauth2accesstoken \
+          --password-stdin https://us-central1-docker.pkg.dev
+
+      - name: Push Helm chart to repository
+        run: |
+          helm repo add app-chart "oci://${{ env.REGISTRY_LOCATION }}-docker.pkg.dev/${{ PROJECT_ID }}/${{ REPOSITORY }}"
+          helm push ./packaged-charts/*.tgz app-chart
