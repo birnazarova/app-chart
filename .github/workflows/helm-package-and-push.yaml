@@ -1,4 +1,4 @@
-name: package-and-push-helm-chart
+name: Helm package and push to GAR
 
 on:
   workflow_run:
