@@ -1,27 +1,27 @@
-# name: Helm Chart Lint
+name: Helm Chart Lint
 
-# on:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
-#     branches:
-#       - main
-#   workflow_dispatch:
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
-# jobs:
-#   lint:
-#     runs-on: ubuntu-latest
+jobs:
+  lint:
+    runs-on: ubuntu-latest
     
-#     steps:
-#     - name: Checkout code
-#       uses: actions/checkout@v2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-#     - name: Install Helm
-#       uses: azure/setup-helm@v1
-#       with:
-#         version: 'latest'
+    - name: Install Helm
+      uses: azure/setup-helm@v1
+      with:
+        version: 'latest'
 
-#     - name: Lint Helm chart
-#       run: |
-#         helm lint aikas-app/
+    - name: Lint Helm chart
+      run: |
+        helm lint aikas-app/
