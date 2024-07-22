@@ -7,12 +7,12 @@ on:
     workflow_dispatch:
 
 jobs:
-    validate:
-        runs-on: ubuntu-latest
+  validate:
+    runs-on: ubuntu-latest
 
-        steps:
-        - name: Check out code
-        uses: actions/checkout@v3
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
 
-        - name: Run yamllint
-        uses: actionshub/yamllint@v1.8.0
+    - name: Run yamllint
+      uses: actionshub/yamllint@v1.8.0
