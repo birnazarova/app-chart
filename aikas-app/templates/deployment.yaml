@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.nginxApp.deploymentName }}
+  name: {{ .Values.nginxApp.deploymentName }} #nginx-app
   labels:
 {{- include "commonLabels" . | nindent 4 }}
 spec:
@@ -21,3 +21,4 @@ spec:
           ports:
             - name: {{ .Values.nginxApp.containerPortName }}
               containerPort: {{ .Values.nginxApp.containerPortNumber }}
+{{- include "imageVolume" . | nindent 6 }}
