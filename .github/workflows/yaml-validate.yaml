@@ -1,0 +1,29 @@
+name: Validate YAML Files
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint YAML
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+
+    - name: Install yamllint
+      run: pip install yamllint
+
+    - name: Run yamllint
+      run: |
+        yamllint $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '\.y(a)?ml$')
+
