@@ -1,4 +1,4 @@
-name: Validate YAML Files
+name: validate
 
 on:
   push:
@@ -23,7 +23,13 @@ jobs:
     - name: Install yamllint
       run: pip install yamllint
 
-    - name: Run yamllint
+    - name: Find changed YAML files
+      id: find_files
       run: |
-        yamllint $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '\.y(a)?ml$')
+        CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '\.y(a)?ml$' || true)
+        echo "::set-output name=files::$CHANGED_FILES"
 
+    - name: Run yamllint
+      if: steps.find_files.outputs.files != ''
+      run: |
+        yamllint ${{ steps.find_files.outputs.files }}
