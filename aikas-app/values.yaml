@@ -3,8 +3,8 @@ nginxApp:
   deploymentName: nginx-app
   containerName: nginx
   image:
-    repository: us-central1-docker.pkg.dev/proven-dryad-417822/hello-app/hello-app
-    tag: "v2"
+    repository: us-central1-docker.pkg.dev/absolute-cubist-432720-a9/app-chart-docker/hello-app
+    tag: "v1"
   containerPortName: http
   containerPortNumber: 80
   containerTargetPortNumber: 80
